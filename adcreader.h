@@ -12,7 +12,7 @@ public:
 	int get_samples();
 	bool read_enable();
 private:
-	bool running;
+	bool running; 
 	int ret;
 	int fd;
 	int no_tty;
