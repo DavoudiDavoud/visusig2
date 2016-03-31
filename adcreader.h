@@ -12,7 +12,7 @@ public:
 	int get_samples();
 	bool read_enable();
 	
-	int ret = 0;
+	int ret;
 	int fd;
 	int sysfs_fd;
 	bool running; 
