@@ -11,10 +11,11 @@ public:
 	void run();
 	int get_samples();
 	bool read_enable();
-private:
-	bool running; 
-	int ret;
+	
+	int ret = 0;
 	int fd;
+	int sysfs_fd;
+	bool running; 
 	int no_tty;
 	int inp;
 	int outp;
