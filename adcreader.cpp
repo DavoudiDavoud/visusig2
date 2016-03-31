@@ -205,7 +205,7 @@ void ADCreader::run()
 	  
 	  // tell the AD7705 to read the data register (16 bits)
 	  // let's wait for data for max one second
-	  ret = gpio_poll(sysfs_fd,1000);
+	  ret = gpio_poll(sysfs_fd,100);
 	  if (ret<1) {
 	    fprintf(stderr,"Poll error %d\n",ret);
 	    }
@@ -252,5 +252,7 @@ void ADCreader::quit()
 	running = false;
 	close(fd);
 	gpio_fd_close(sysfs_fd);
+       fprintf(stderr,"fd and sysfs_fd have cl0sed\n");	
+
 	exit(0);
 }
