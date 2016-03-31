@@ -47,7 +47,7 @@ static void writeReset(int fd)
   	
 	ret = ioctl(fd, SPI_IOC_MESSAGE(1), &tr);
 	if (ret < 1)
-		pabort("can't send spi message");
+		pabort("can't send spi message-->writeReset");
 }
 
 static void writeReg(int fd, uint8_t v)
@@ -68,7 +68,7 @@ static void writeReg(int fd, uint8_t v)
 
 	ret = ioctl(fd, SPI_IOC_MESSAGE(1), &tr);
 	if (ret < 1)
-		pabort("can't send spi message");
+		pabort("can't send spi message--->writeReg");
 
 }
 
@@ -90,7 +90,7 @@ static uint8_t readReg(int fd)
 
 	ret = ioctl(fd, SPI_IOC_MESSAGE(1), &tr);
 	if (ret < 1)
-	  pabort("can't send spi message");
+	  pabort("can't send spi message--->readReg");
 	  
 	return rx1[0];
 }
@@ -112,7 +112,7 @@ static int readData(int fd)
 
 	ret = ioctl(fd, SPI_IOC_MESSAGE(1), &tr);
 	if (ret < 1)
-	  pabort("can't send spi message");
+	  pabort("can't send spi message--->readData");
 	  
 	return (rx1[0]<<8)|(rx1[1]);
 }
@@ -122,6 +122,8 @@ ADCreader::ADCreader(){
 	//int no_tty = !isatty( fileno(stdout) );
 
 	fd = open(device, O_RDWR);
+	fprintf(stderr, "device opened\n");
+
 	if (fd < 0)
 		pabort("can't open device");
 
@@ -182,12 +184,15 @@ ADCreader::ADCreader(){
 	// intiates a self calibration and then after that starts converting
 	writeReg(fd,0x00);
 	running=0;
+	fprintf(stderr, "end of instructor\n");
 
 }
 void ADCreader::run()
 {
 	
 	// we read data in an endless loop and display it
+	fprintf(stderr, "run--->start\n");
+
 	running = true; 
 	while (running) {
 	int d=0;
@@ -198,6 +203,8 @@ void ADCreader::run()
 	  } while ( d );
 	  
 	  // tell the AD7705 to read the data register (16 bits)
+       	fprintf(stderr, "before first wite\n");
+  
 	  writeReg(fd,0x38);
 	  // read the data register by performing two 8 bit reads
 	  int value = readData(fd)-0x8000;
