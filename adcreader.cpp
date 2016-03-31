@@ -196,15 +196,20 @@ void ADCreader::run()
 	
 	running = true; 
 	while (running) {
-	int d=0;
-	  do {
+//	int d=0;
+//	  do {
 	    // read /DRDY of the AD converter
-	    d = bcm2835_gpio_lev(drdy_GPIO);
+//	    d = bcm2835_gpio_lev(drdy_GPIO);
 	    // loop while /DRDY is high
-	  } while ( d );
+//	  } while ( d );
 	  
 	  // tell the AD7705 to read the data register (16 bits)
-       	fprintf(stderr, "before first wite\n");
+	  // let's wait for data for max one second
+	  ret = gpio_poll(sysfs_fd,1000);
+	  if (ret<1) {
+	    fprintf(stderr,"Poll error %d\n",ret);
+	    }
+       	 fprintf(stderr, "run-->wite\n");
   
 	  writeReg(fd,0x38);
 	  // read the data register by performing two 8 bit reads
@@ -245,5 +250,7 @@ int ADCreader::get_samples()
 void ADCreader::quit()
 {
 	running = false;
+	close(fd);
+	gpio_fd_close(sysfs_fd);
 	exit(0);
 }
