@@ -1,7 +1,7 @@
- #ifndef WINDOW_H
+#ifndef WINDOW_H
 #define WINDOW_H
 
-#include <qwt/qwt_thermo.h>
+//#include <qwt/qwt_thermo.h>
 #include <qwt/qwt_knob.h>
 #include <qwt/qwt_plot.h>
 #include <qwt/qwt_plot_curve.h>
@@ -32,7 +32,7 @@ private:
 	QwtKnob      *knob;
 	QwtTextLabel *m_label;
 	QwtTextLabel *m1_label;
-	QwtThermo    *thermo;
+//	QwtThermo    *thermo;
 	QwtPlot      *plot;
 	QwtPlotCurve *curve;
 
