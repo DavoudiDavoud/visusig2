@@ -46,9 +46,9 @@ Window::Window() : func(0),count(0)
 	// set up the layout - knob above thermometer
 	vLayout = new QVBoxLayout;
 	vLayout->addWidget(knob);
-	vLayout->addWidget(m_label);
-	vLayout->addWidget(m1_label);
-	//vLayout->addWidget(thermo);
+//	vLayout->addWidget(m_label);
+//	vLayout->addWidget(m1_label);
+//	vLayout->addWidget(thermo);
 
 	// plot to the left of knob and thermometer
 	hLayout = new QHBoxLayout;
