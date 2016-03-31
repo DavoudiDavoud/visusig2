@@ -1,8 +1,8 @@
 #include "window.h"
 #include "adcreader.h"
 
-#include <cmath>  // for sine stuff
-double max=0.0;
+//#include <cmath>  // for sine stuff
+//double max=0.0;
 
 Window::Window() : func(0),count(0)
 {
@@ -19,12 +19,12 @@ Window::Window() : func(0),count(0)
         //thr=new QPushButton;
 	//thr->setText(tr("Threshold"));
 	//thr->show();
-        m_label = new QwtTextLabel;
-	m_label->setText("Max: ");
-	m_label->show();
-	m1_label= new QwtTextLabel;
-	m1_label->setText("0");
-	m1_label->show();
+//        m_label = new QwtTextLabel;
+//	m_label->setText("Max: ");
+//	m_label->show();
+//	m1_label= new QwtTextLabel;
+//	m1_label->setText("0");
+//	m1_label->show();
 
 	// set up the initial plot data
 	for( int index=0; index<plotDataSize; ++index )
@@ -36,7 +36,7 @@ Window::Window() : func(0),count(0)
 	curve = new QwtPlotCurve;
 	plot = new QwtPlot;
 	// make a plot curve from the data and attach it to the plot
-	//curve->setSamples(xData, yData, plotDataSize);
+	curve->setSamples(xData, yData, plotDataSize);
 	curve->attach(plot);
 
 	plot->replot();
@@ -77,54 +77,11 @@ Window::~Window() {
 void Window::timerEvent( QTimerEvent * )
 {
 	int inval;
-	double fsrvolt;
-	double fsrres;
-	double fsrcon;
-	double fsrforce;
-	double slope;
-	double inv=3300;
-	double val=65536;
-	double res=10000;
-	double condd=1000000;	
 	double value;
-	count =0;
 	while(adcreader->read_enable()){
 				
 		inval=adcreader->get_samples();
-		if (func==1){
-			inval=inval+32768-12668;
-			slope= inv/val;
-			fsrvolt=slope*inval;
-			fsrres=(inv-fsrvolt)*res;
-			fsrres/=fsrvolt;
-		
-			fsrcon=condd;
-			fsrcon/=fsrres;
-			if(fsrcon<=1000){
-				fsrforce=fsrcon/80;
-			}else{
-				fsrforce=fsrcon-1000;
-				fsrforce/=30;
-			}
-			if (max<fsrforce){
-				max=fsrforce;
-			}
-			char m_buf[sizeof(max)];
-			sprintf(m_buf,"%f",max);
-			m1_label->setText(m_buf);
-			value=fsrforce;
-		}else if (func==2){
-			max=0;
-			if (inval>=10000){
-			 value=1;
-			}else{
-				max=0;
-				value=0;
-			}
-		}else {
-			value=inval;
-		}
-		
+		value=(double) inval;
 		// add the new input to the plot
 		memmove( yData, yData+1, (plotDataSize-1) * sizeof(double) );
 		yData[plotDataSize-1] = value;
