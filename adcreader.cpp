@@ -115,10 +115,8 @@ static int readData(int fd)
 
 ADCreader::ADCreader(){
 	
-	int ret = 0;
-	int fd;
-	int sysfs_fd;
-
+	ret = 0;
+	
 	//int no_tty = !isatty( fileno(stdout) );
 
 	fd = open(device, O_RDWR);
