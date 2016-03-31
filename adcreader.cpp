@@ -50,11 +50,12 @@ static void writeReset(int fd)
   }
 }
 
-static void writeReset(int fd)
+static void writeReg(int fd, uint8_t v)
 {
   int ret;
-  uint8_t tx1[5] = {0xff,0xff,0xff,0xff,0xff};
-  uint8_t rx1[5] = {0};
+  uint8_t tx1[1];
+  tx1[0] = v;
+  uint8_t rx1[1] = {0};
   struct spi_ioc_transfer tr;
 
   memset(&tr,0,sizeof(struct spi_ioc_transfer));
@@ -63,12 +64,9 @@ static void writeReset(int fd)
   tr.len = sizeof(tx1);
 
   ret = ioctl(fd, SPI_IOC_MESSAGE(1), &tr);
-  if (ret < 1) {
-    printf("\nerr=%d when trying to reset. \n",ret);
-    pabort("Can't send spi message");
-  }
+  if (ret < 1)
+    pabort("can't send spi message");
 }
-
 
 static uint8_t readReg(int fd)
 {
