@@ -209,7 +209,7 @@ void ADCreader::run()
 	  if (ret<1) {
 	    fprintf(stderr,"Poll error %d\n",ret);
 	    }
-       	 fprintf(stderr, "run-->wite\n");
+
   
 	  writeReg(fd,0x38);
 	  // read the data register by performing two 8 bit reads
