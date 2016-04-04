@@ -82,6 +82,9 @@ void Window::timerEvent( QTimerEvent * )
 				
 		inval=adcreader->get_samples();
 		value=(double) inval;
+		fprintf(stderr,"int = %d  double = %f     \r",inval,value);
+
+		
 		// add the new input to the plot
 		memmove( yData, yData+1, (plotDataSize-1) * sizeof(double) );
 		yData[plotDataSize-1] = value;
