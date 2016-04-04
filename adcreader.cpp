@@ -213,7 +213,8 @@ void ADCreader::run()
   
 	  writeReg(fd,0x38);
 	  // read the data register by performing two 8 bit reads
-	  int value = readData(fd)-0x8000;
+	  //int value = readData(fd)-0x8000;
+	  int value = readData(fd);
 	  buff[inp]=value;
           //fprintf(stderr,"data = %d       \n",buff[inp]);
 	  inp=(inp+1)%100;	
