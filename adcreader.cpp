@@ -184,7 +184,7 @@ ADCreader::ADCreader(){
 	// tell the AD7705 that the next write will be the setup register
 	writeReg(fd,0x11);
 	// intiates a self calibration and then after that starts converting
-	writeReg(fd,0x00);
+	writeReg(fd,0x58);
 	running=0;
 	fprintf(stderr, "end of instructor\n");
 
@@ -213,7 +213,7 @@ void ADCreader::run()
   
 	  writeReg(fd,0x39);
 	  // read the data register by performing two 8 bit reads
-	  int value = readData(fd)-0x8000;
+	  int value = readData(fd);
 	  
 	  buff[inp]=value;
           //fprintf(stderr,"data = %d       \n",buff[inp]);
